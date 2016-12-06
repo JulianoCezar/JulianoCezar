@@ -1,3 +1,7 @@
+##### O banco de dados est√° dispon√≠vel nesse link: 
+#####http://academictorrents.com/details/9b13183dc4d60676b773c9e2cd6de5e5542cee9a
+
+#### pacotes necess√°rios
 require(softImpute)
 require(data.table)
 require(pryr)
@@ -5,12 +9,12 @@ require(dplyr)
 require(lattice)
 require(xtable)
 ############################# importando dados de treinamento ######################################
-## especifica diretÛrio dos dados do netflix
+## especificar diret√≥rio onde est√£o os dados no computador.
 setwd("C:\\Users\\Juliano\\Desktop\\TCC-2.2016\\Netflix dados tcc\\download\\training_set")
 
 #lista os arquivos com mv
 file_list<-list.files(pattern = "mv*")
-#le todos os arquivos atravÈs de um loop
+#le todos os arquivos atrav√©s de um loop
 data_list = lapply(file_list, read.table, sep = ",",skip=1)
 ####### salvando
 save(data_list,file="data_list.Rdata")
@@ -40,14 +44,14 @@ importa<-fread("mmm.txt")
 ####### salvando
 save(importa,file="importa.Rdata")
 load("importa.Rdata")
-##verificando o numero de usu·rios,
-##uma vez que o numero de usu·rios È menor que o numero de ids.
+##verificando o numero de usu√°rios,
+##uma vez que o numero de usu√°rios √© menor que o numero de ids.
 length(unique(importa$V2))
 
-##ordenando dados com relaÁ„o aos usu·rios.
+##ordenando dados com rela√ß√£o aos usu√°rios.
 xo<-importa[order(importa$V2),]
 
-##criar um vetor para substituir o vetor de usu·rios.
+##criar um vetor para substituir o vetor de usu√°rios.
 xox<-data.frame(table(xo$V2))
 usuarios<-rep(1:length(xox$Var1),xox$Freq)
 ####### salvando
@@ -63,7 +67,7 @@ load("matespar.Rdata")
 
 
 ########################################### importando dados de sondagem ################################################
-## especifica diretÛrio dos dados do netflix
+## especifica diret√≥rio dos dados do netflix
 setwd("C:\\Users\\Juliano\\Desktop\\TCC-2.2016\\Netflix dados tcc\\download\\")
 list.files()
 avaliados<-readLines("probe.txt")
@@ -75,12 +79,12 @@ length(ind.filmes)
 
 avaliados[ind.filmes] = sub(":","",avaliados[ind.filmes])
 
-# Converte em numÈrico
+# Converte em num√©rico
 
 avaliados = as.numeric(avaliados)
 
-# Cria uma matriz com duas colunas com os Ìndices da matriz onde os filmes foram avaliados.
-# Para isso adicione um ˙ltimo elemento ao ind.filmes que È o comprimento de avaliados mais 1.
+# Cria uma matriz com duas colunas com os √≠ndices da matriz onde os filmes foram avaliados.
+# Para isso adicione um √∫ltimo elemento ao ind.filmes que √© o comprimento de avaliados mais 1.
 num.filmes = length(ind.filmes)
 ind.filmes.m = c(ind.filmes, length(avaliados)+1)
 
@@ -98,7 +102,7 @@ setwd("C:\\Users\\Juliano\\Desktop\\TCC-2.2016\\market matrix")
 
 load("importa.Rdata")
 
-##ordenando dados com relaÁ„o aos usu·rios.
+##ordenando dados com rela√ß√£o aos usu√°rios.
 xo<-importa[order(importa$V2),]
 ####### salvando
 save(xo,file="xo.Rdata")
@@ -109,7 +113,7 @@ user<-xo$V2
 save(user,file="user.Rdata")
 load("user.Rdata")
 
-#### comparando coluna de usu·rios para id antigo e id novo
+#### comparando coluna de usu√°rios para id antigo e id novo
 load("usuarios.Rdata")
 compara<-cbind(user,usuarios)
 head(compara,n=5)
@@ -136,7 +140,7 @@ load("us_fil.Rdata")
 
 
 
-#####arrumando banco de dados de treinamento para an·lise exploratÛria#########
+#####arrumando banco de dados de treinamento para an√°lise explorat√≥ria#########
 load("xo.Rdata")
 head(xo)
 load("usuarios.Rdata")
@@ -154,7 +158,7 @@ load("dados.leng.Rdata")
 dados.lengu<-dados.exp[,c(2,3)]
 save(dados.lengu,file="dados.lengu.Rdata")
 load("dados.lengu.Rdata")
-#####arrumando banco de dados de sondagem para an·lise exploratÛria#########
+#####arrumando banco de dados de sondagem para an√°lise explorat√≥ria#########
 us_fil<-data.table(us_fil)
 probe<-inner_join(dados.exp,us_fil)
 probe<-data.table(probe)
@@ -174,7 +178,7 @@ c(4,1,0,0,0)%*%(b$v)[,1:2]%*%t(b$v)[1:2,]
 
 ###########################################################
 
-##########################an·lise exploratÛria############################
+##########################an√°lise explorat√≥ria############################
 
 ####medidas de tendencia central :
 ###media mediana max min
@@ -185,14 +189,14 @@ moda<-function(x){
   ux[which.max(tabulate(match(x,ux)))]
 }
 moda.notas<-moda(dados.exp$notas)
-## numero de observaÁıes 
+## numero de observa√ß√µes 
 nnotas<-length(dados.exp$notas)
-### tabela de frequÍncia
+### tabela de frequ√™ncia
 tabe<-table(dados.exp$notas)
 xtable(data.frame(tabe))
 xtable(tabe)
 
-###### tabelas das primeiras e ultimas 5 observaÁıoes de cada conjunto
+###### tabelas das primeiras e ultimas 5 observa√ß√µoes de cada conjunto
 
 aa<-rbind(head(probe[,1:2,with=F],n=5),tail(probe[,1:2,with=F],n=5))
 xtable(aa)
@@ -203,16 +207,16 @@ xtable(bb)
 
 
 
-############# medidas de dispers„o das avaliaÁıes
-#variancia das avaliaÁıes
+############# medidas de dispers√£o das avalia√ß√µes
+#variancia das avalia√ß√µes
 var(dados.exp$notas)
 #desvio
 desvio<-sd(dados.exp$notas)
 
-########## medidas de dispers„o entre os usuarios e dentre os usuarios
+########## medidas de dispers√£o entre os usuarios e dentre os usuarios
 ############################################## HISTOGRAMAS
 ################## Podemos avaliar simetria e peso da cauda pelo histograma
-##################avaliar distribuiÁ„o das notas
+##################avaliar distribui√ß√£o das notas
 ##################histogramas do treinamento e do probe
 
 
@@ -221,19 +225,19 @@ load("dados.exp.Rdata")
 dados.h<-dados.exp$notas
 save(dados.h,file="dados.h.Rdata")
 load("dados.h.Rdata")
-histogram( ~ dados.h, xlab = "AvaliaÁıes", type ="percent", col="dodgerblue") 
-histogram( ~ notas, data = probe, xlab = "AvaliaÁıes", type ="percent", 
+histogram( ~ dados.h, xlab = "Avalia√ß√µes", type ="percent", col="dodgerblue") 
+histogram( ~ notas, data = probe, xlab = "Avalia√ß√µes", type ="percent", 
            col="dodgerblue")
 
 
 ###########################################################################
-################ histogramas das mÈdias
+################ histogramas das m√©dias
 media.u<-aggregate(dados.exp[,c(2,3)],list(dados.exp$Usuarios),mean)
 load("media.u.Rdata")
 media.f<-aggregate(dados.exp[,c(1,3)],list(dados.exp$filmes),mean)
 load("media.f.Rdata")
-histogram( ~ notas, data=media.u, xlab = "AvaliaÁıes", main="Histograma para as mÈdias das avaliaÁıes por usu·rio",col="dodgerblue") +
-  histogram( ~ notas, data = media.f, xlab = "AvaliaÁıes", main="Histograma para as mÈdias das avaliaÁıes por filme",col="red")
+histogram( ~ notas, data=media.u, xlab = "Avalia√ß√µes", main="Histograma para as m√©dias das avalia√ß√µes por usu√°rio",col="dodgerblue") +
+  histogram( ~ notas, data = media.f, xlab = "Avalia√ß√µes", main="Histograma para as m√©dias das avalia√ß√µes por filme",col="red")
 
 
 ##### estudo dos filmes
@@ -246,16 +250,16 @@ which.min(leng.filme$notas)
 leng.filme$notas[13755]
 ordenado<-order(leng.filme$notas)
 leng.filme<-leng.filme[order(leng.filme$notas),]
-####filmes com menor numero de avaliaÁıes 
+####filmes com menor numero de avalia√ß√µes 
 head(leng.filme,n=5)
-####filmes com maior numero de avaliaÁıes 
+####filmes com maior numero de avalia√ß√µes 
 tail(leng.filme,n=5)
 
-####em mÈdia cada filme recebeu x avaliaÁıes, var
+####em m√©dia cada filme recebeu x avalia√ß√µes, var
 mean(leng.filme$notas)
 var(leng.filme$notas)
 
-####em mÈdia cada usu·rio avaliou y filmes, var 
+####em m√©dia cada usu√°rio avaliou y filmes, var 
 leng.usu<-aggregate(dados.lengu,list(dados.lengu$Usuarios),length)
 head(dados.lengu)
 load("leng.usu.Rdata")
@@ -268,7 +272,7 @@ head(leng.usu)
 tail(leng.usu)
 
 
-#################################### PREVIS√O ###############################################
+#################################### PREVIS√ÉO ###############################################
 #### indices dos dados  de tamanho 100000 para usar deBIAS
 sdeb<-sample_n(us_fil,1e+05)
 save(sdeb,file = "sdeb.Rdata")
@@ -280,11 +284,11 @@ load("probe.Rdata")
 sdebn<-inner_join(probe,sdeb)
 sdebn<-Incomplete(sdebn$Usuarios,sdebn$filmes,sdebn$notas)
 save(sdebn,file="sdebn.Rdata")
-#### porÁ„o dos dados de tamanho 100000 para deBias
+#### por√ß√£o dos dados de tamanho 100000 para deBias
 load("sdebn.Rdata")
 ####
 
-#### porÁ„o dos dados restantes
+#### por√ß√£o dos dados restantes
 sprev<-anti_join(probe,sdeb)
 save(sprev,file="sprev.Rdata")
 load("sprev.Rdata")
@@ -294,12 +298,12 @@ probe.notas<-probe$notas
 save(probe.notas,file="probe.notas.Rdata")
 load("probe.notas.Rdata")
 
-####### modelos softimpute: modelo genÈrico####
+####### modelos softimpute: modelo gen√©rico####
 #setwd("C:\\Users\\aluno\\Desktop\\rodar")
 load("matespar.Rdata")
 
-### codigo para todos os modelos, basta mudar os argumentos da sequÍncia 
-### e da funÁ„o softimpute
+### codigo para todos os modelos, basta mudar os argumentos da sequ√™ncia 
+### e da fun√ß√£o softimpute
 lamseq=exp(seq(from=log(703),log(236),length=10))
 
 lam5<-lamseq[5]
@@ -327,14 +331,14 @@ save(prev1,file="prev1.Rdata")
 load("prev1.Rdata")
 ###### 
 
-#### raiz do erro quadr·tico mÈdio
+#### raiz do erro quadr√°tico m√©dio
 rmse1<-sqrt((sum((sprev$notas-prev1)^2))/length(sprev$notas))
 save(rmse1,file="rmse1.Rdata")
 load("rmse1.Rdata")
 #### 
 
 
-### tirando o viÈs 
+### tirando o vi√©s 
 ajusted1<-deBias(sdebn,ajuste1)
 save(ajusted1,file="ajusted1.Rdata")
 load("ajusted1.Rdata")
@@ -346,7 +350,7 @@ save(prev1d,file="prev1d.Rdata")
 load("prev1d.Rdata")
 ###### 
 
-#### raiz do erro quadr·tico mÈdio do sem vies
+#### raiz do erro quadr√°tico m√©dio do sem vies
 rmse1d<-sqrt((sum((sprev$notas-prev1d)^2))/length(sprev$notas))
 save(rmse1d,file="rmse1d.Rdata")
 load("rmse1d.Rdata")
